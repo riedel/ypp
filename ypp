@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 MIT License
 
@@ -86,5 +87,13 @@ yaml.add_constructor('!include-raw', construct_include_raw, Loader)
 if __name__ == '__main__':
     for arg in sys.argv[1:]:
         with open(arg, 'r') as f:
-            data = yaml.load(f, Loader)
-            print(yaml.dump(data, Dumper=yamlloader.ordereddict.CDumper, default_flow_style=False))
+            print(
+                yaml.dump(
+                    yaml.load(f, Loader),
+                    Dumper=yamlloader.ordereddict.CDumper,
+                    default_flow_style=False))
+    if len(sys.argv) == 1:
+        print(yaml.dump(
+            yaml.load(sys.stdin, Loader),
+            Dumper=yamlloader.ordereddict.CDumper,
+            default_flow_style=False))
